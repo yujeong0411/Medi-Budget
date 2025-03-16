@@ -361,4 +361,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+.csv
 # End of https://www.toptal.com/developers/gitignore/api/windows,venv,webstorm,visualstudiocode,react,python,dotenv
