@@ -2,3 +2,4 @@
 `python -m venv venv` <br/>
 `source venv/Scripts/activate` <br/>
 `pip install -r requirements.txt`
+`python -m playwright install`

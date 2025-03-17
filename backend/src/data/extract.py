@@ -1,10 +1,10 @@
 import os
 import pandas as pd
 import glob
-from db_config import get_db_engine, insert_dataframe
+from db_config import insert_dataframe
 
 data_dir = "../../data/raw"
-table_name = 'raw_data'  # 원본 테이블
+table_name = 'raw_medical_data'  # 원본 테이블
 
 # 결과를 저장할 데이터프레임 초기화
 all_data = pd.DataFrame()
@@ -139,6 +139,6 @@ except Exception as e:
         
 
 # CSV로도 저장
-output_path = os.path.join(data_dir, "extracted_disease_data.csv")
-all_data.to_csv(output_path, index=False, encoding='utf-8-sig')
-print(f"data saved to {output_path}")
+# output_path = os.path.join(data_dir, "extracted_disease_data.csv")
+# all_data.to_csv(output_path, index=False, encoding='utf-8-sig')
+# print(f"data saved to {output_path}")

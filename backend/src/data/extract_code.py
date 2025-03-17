@@ -1,5 +1,5 @@
 import pandas as pd
-from db_config import get_db_engine
+from db_config import get_db_engine, insert_dataframe
 
 def extract_disease_codes():
     try: 
@@ -8,7 +8,7 @@ def extract_disease_codes():
         # SELECT DISTINCT : 중복제거
         query = """
         SELECT DISTINCT disease_code, disease_name
-        FROM raw_data
+        FROM raw_medical_data
         WHERE disease_code IS NOT NULL
         ORDER BY disease_code
         """
@@ -32,3 +32,11 @@ if __name__ == '__main__':
 
         disease_codes.to_csv("disease_codes.csv", index=False, encoding='utf-8-sig')
         print("질병코드가 CSV 파일로 저장")
+        
+        # diseases 테이블이 이미 있다면 기존 데이터를 삭제하고 새로 저장 ('replace')
+        # 기존 데이터에 추가하려면 'append'로 변경
+        try: 
+            insert_dataframe(disease_codes, table_name='diseases', if_exists='append')
+            print("질병코드가 diseases 테이블에 저장되었습니다.")
+        except Exception as e:
+            print(f"db저장 실패: {e}")

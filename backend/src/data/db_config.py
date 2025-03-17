@@ -27,10 +27,10 @@ def execute_query(query, params=None):
             result = connection.execute(query)
         return result
     
-def read_sql_query(query, params=None):
-    # SQL 쿼리를 실행하고 결과를 DataFrame으로 반환
-    engine = get_db_engine()
-    return pd.read_sql_query(query, engine, params=params)
+# def read_sql_query(query, params=None):
+#     # SQL 쿼리를 실행하고 결과를 DataFrame으로 반환
+#     engine = get_db_engine()
+#     return pd.read_sql_query(query, engine, params=params)
 
 def insert_dataframe(df, table_name, if_exists='append'):
     # DataFrame을 데이터베이스 테이블에 저장
