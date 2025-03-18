@@ -35,7 +35,19 @@ def crawl_disesea_info(disease_codes_df):
             page.click('input#searchWrd')  # 입력창 클릭 
             page.fill('input#searchWrd1', disease_code)  # 코드 입력 
             page.click('a#popSearchBtn1')  # 검색 클릭 
-            page.click('a[onclick="fnPopupSelect(1);"]')  # 해당 코드 선택
+            
+            page.wait_for_load_state('networkidle')
+            print("페이지 로딩 완료")
+
+            # 검색 결과
+            search_content = page.content()
+            search_soup = BeautifulSoup(search_content, 'html.parser')
+            search_table = search_soup.find("div", class_="tblType01 head yScroll").find("table")
+            search_rows = search_table.select('tbody tr')
+            for i, td in enumerate(search_rows, 1):
+                code_cell = td.select_one('a')
+                if code_cell and code_cell.text.strip() == disease_code:
+                    page.click(f'[onclick="fnPopupSelect({i});"]')  # 해당 코드 선택
 
             # 심사년도 설정 및 검색
             page.select_option('select#sRvYr', '2021')
