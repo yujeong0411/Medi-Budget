@@ -20,7 +20,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",  // 'node_modules' 폴더는 검사하지 않음
+    "**/node_modules",  // 서브 디렉토리의 'node_modules'도 검사하지 않음
+    "dist"  // 빌드 결과물이 저장되는 'dist' 폴더는 검사에서 제외
+  ]
 }
