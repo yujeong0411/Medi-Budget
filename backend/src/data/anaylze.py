@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import psycopg2 
 import optparse
-from db_config import get_db_engine
+import os
+from configs.db_config import get_db_engine
 
 # 결과 저장 폴더 생성
 RESULT_DIR = 'analsys_results'

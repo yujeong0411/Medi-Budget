@@ -7,7 +7,7 @@ export default {
         sans: ['Pretendard', 'sans-serif'],
       },
       colors: {
-        baseText: '#04264B',
+        baseColor: '#04264B',
       },
     },
   },
