@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
-from db_config import insert_dataframe
+from configs.db_config import insert_dataframe
 from playwright.sync_api import sync_playwright
 
 def load_disease_codes_from_csv(file_path="disease_codes.csv"):

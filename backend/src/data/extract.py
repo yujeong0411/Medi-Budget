@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 import glob
-from db_config import insert_dataframe
+from configs.db_config import insert_dataframe
 
-data_dir = "../../data/raw"
+data_dir = "raw/"
 table_name = 'raw_medical_data'  # 원본 테이블
 
 # 결과를 저장할 데이터프레임 초기화

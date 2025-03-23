@@ -1,5 +1,5 @@
 import pandas as pd
-from db_config import get_db_engine, insert_dataframe
+from configs.db_config import get_db_engine, insert_dataframe
 
 def extract_disease_codes():
     try: 
