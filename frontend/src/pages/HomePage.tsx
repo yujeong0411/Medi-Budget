@@ -1,6 +1,7 @@
 import Logo from '@/components/logo.tsx';
 import { useRef, useEffect, useState } from 'react';
 import useDropDownStore from '@/stores/useDropDownStore.ts';
+import DropDown from '@/components/DropDown.tsx';
 
 function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -67,6 +68,23 @@ function HomePage() {
     // api 호출
   };
 
+
+  const diseaseOptions = diseases.map(disease => ({
+    id: disease.disease_id,
+    name: disease.disease_name
+  }));
+
+  const hospitalTypeOptions = hospitalTypes.map(hospitalType => ({
+    id: hospitalType.hospital_type_id,
+    name: hospitalType.hospital_type
+  }));
+
+  const regionOptions = regions.map(region => ({
+    id: region.region_id,
+    name: region.region_name
+  }));
+
+
   return (
     <div className="w-full h-full relative">
       {/*헤더*/}
@@ -122,30 +140,18 @@ function HomePage() {
             {/*첫번째 행*/}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-3">
               <div className="flex flex-col">
-                <label className="text-base sm:text-lg mb-1 sm:mb-2">질환</label>
-                {/*<input type="text" className="p-3 rounded-lg min-h-[50px]" />*/}
-                <select
+                <DropDown
                   id="disease"
-                  className="p-3 rounded-lg min-h-[50px] bg-white"
-                  value={selectedDisease || ''}
-                  onChange={(e) =>
-                    setSelectedDisease(e.target.value ? Number(e.target.value) : null)
-                  }
-                >
-                  <option value="">질환을 선택하세요.</option>
-                  {loading.diseases ? (
-                    <option disabled>가져오는 중...</option>
-                  ) : error.diseases ? (
-                    <option disabled>데이터를 불러올 수 없습니다.</option>
-                  ) : (
-                    diseases.map((disease) => (
-                      <option key={disease.disease_id} value={disease.disease_id}>
-                        {disease.disease_name}
-                      </option>
-                    ))
-                  )}
-                </select>
-                {error.diseases && <p className="text-red-600 text-sm mt-1">{error.diseases}</p>}
+                  options={diseaseOptions}
+                  placeholder="질환을 검색하세요"
+                  label="질환"
+                  value={selectedDisease}
+                  onChange={setSelectedDisease}
+                  loading={loading.diseases}
+                  error={error.diseases}
+                  keyProperty="id"
+                  displayProperty="name"
+                />
               </div>
               <div className="flex flex-col">
                 <label className="text-base sm:text-lg mb-1 sm:mb-2">나이</label>
@@ -165,62 +171,33 @@ function HomePage() {
             {/*두번째 행*/}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-3">
               <div className="flex flex-col">
-                <label className="text-base sm:text-lg mb-1 sm:mb-2">병원 종류</label>
-                {/*<input type="text" className="p-3 rounded-lg min-h-[50px]" />*/}
-                <select
+                <DropDown
                   id="hospitalType"
-                  className="p-3 rounded-lg min-h-[50px] bg-white"
-                  value={selectedHospitalType || ''}
-                  onChange={(e) =>
-                    setSelectedHospitalType(e.target.value ? Number(e.target.value) : null)
-                  }
-                >
-                  <option value="">병원 종류를 선택하세요</option>
-                  {loading.hospitalTypes ? (
-                    <option disabled>로딩 중...</option>
-                  ) : error.hospitalTypes ? (
-                    <option disabled>데이터를 불러올 수 없습니다</option>
-                  ) : (
-                    hospitalTypes.map((hospitalType) => (
-                      <option
-                        key={hospitalType.hospital_type_id}
-                        value={hospitalType.hospital_type_id}
-                      >
-                        {hospitalType.hospital_type}
-                      </option>
-                    ))
-                  )}
-                </select>
-                {error.hospitalTypes && (
-                  <p className="text-red-500 text-sm mt-1">{error.hospitalTypes}</p>
-                )}
+                  options={hospitalTypeOptions}
+                  placeholder="병원 종류를 검색하세요"
+                  label="병원 종류"
+                  value={selectedHospitalType}
+                  onChange={setSelectedHospitalType}
+                  loading={loading.hospitalTypes}
+                  error={error.hospitalTypes}
+                  keyProperty="id"
+                  displayProperty="name"
+                />
               </div>
 
                 <div className="flex flex-col">
-                  <label className="text-base sm:text-lg mb-1 sm:mb-2">지역</label>
-                  {/*<input type="text" className="p-3 rounded-lg min-h-[50px]" />*/}
-                  <select
+                  <DropDown
                     id="region"
-                    className="p-3 rounded-lg min-h-[50px] bg-white"
-                    value={selectedRegion || ''}
-                    onChange={(e) =>
-                      setSelectedRegion(e.target.value ? Number(e.target.value) : null)
-                    }
-                  >
-                    <option value="">지역을 선택하세요</option>
-                    {loading.regions ? (
-                      <option disabled>로딩 중...</option>
-                    ) : error.regions ? (
-                      <option disabled>데이터를 불러올 수 없습니다</option>
-                    ) : (
-                      regions.map((region) => (
-                        <option key={region.region_id} value={region.region_id}>
-                          {region.region_name}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                  {error.regions && <p className="text-red-500 text-sm mt-1">{error.regions}</p>}
+                    options={regionOptions}
+                    placeholder="지역을 검색하세요"
+                    label="지역"
+                    value={selectedRegion}
+                    onChange={setSelectedRegion}
+                    loading={loading.regions}
+                    error={error.regions}
+                    keyProperty="id"
+                    displayProperty="name"
+                  />
                 </div>
             </div>
 
