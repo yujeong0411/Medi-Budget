@@ -1,3 +1,5 @@
+# pip install -e . 실행
+
 from setuptools import setup, find_packages
 
 setup(
