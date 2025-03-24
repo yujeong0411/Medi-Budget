@@ -9,6 +9,52 @@ from train_test_split import X_train, X_val, X_test
 
 # print("X_train 컬럼 이름:", X_train.columns.tolist())
 
+# 데이터 소스 구분하기
+def determine_data_source(row):
+    # 병원 종별 데이터
+    if pd.notna(row['hospital_type']) and pd.isna(row['region_name']) and pd.isna(row['age_group']):
+        return 'hosptial_type'
+    # 지역별 데이터
+    elif pd.isna(row['hospital_type']) and pd.notna(row['region_name']) and pd.isna(row['age_group']):
+        return 'region'
+    elif pd.isna(row['hospital_type']) and pd.isna(row['region_name']) and pd.notna(row['age_group']):
+        return 'age_group'
+    
+X_train['data_source'] = X_train.apply(determine_data_source, axis=1)
+X_val['data_source'] = X_val.apply(determine_data_source, axis=1)
+X_test['data_source'] = X_test.apply(determine_data_source, axis=1)
+
+# 데이터 소스별 null 값 처리
+# 의료기관 종별 데이터 
+X_train.loc[X_train['data_source'] == 'hospital_type', 'region_name'] = '전국'
+X_train.loc[X_train['data_source'] == 'hospital_type', 'age_group'] = '전체'
+
+# 지역별 데이터
+X_train.loc[X_train['data_source'] == 'region', 'hospital_type'] = '전체'
+X_train.loc[X_train['data_source'] == 'region', 'age_group'] = '전체'
+
+# 나이별 데이터
+X_train.loc[X_train['data_source'] == 'age_group', 'hospital_type'] = '전체'
+X_train.loc[X_train['data_source'] == 'age_group', 'region_name'] = '전국'
+
+
+# 검증 데이터셋
+X_val.loc[X_val['data_source'] == 'hospital_type', 'region_name'] = '전국'
+X_val.loc[X_val['data_source'] == 'hospital_type', 'age_group'] = '전체'
+X_val.loc[X_val['data_source'] == 'region', 'hospital_type'] = '전체'
+X_val.loc[X_val['data_source'] == 'region', 'age_group'] = '전체'
+X_val.loc[X_val['data_source'] == 'age_group', 'hospital_type'] = '전체'
+X_val.loc[X_val['data_source'] == 'age_group', 'region_name'] = '전국'
+
+# 테스트 데이터셋
+X_test.loc[X_test['data_source'] == 'hospital_type', 'region_name'] = '전국'
+X_test.loc[X_test['data_source'] == 'hospital_type', 'age_group'] = '전체'
+X_test.loc[X_test['data_source'] == 'region', 'hospital_type'] = '전체'
+X_test.loc[X_test['data_source'] == 'region', 'age_group'] = '전체'
+X_test.loc[X_test['data_source'] == 'age_group', 'hospital_type'] = '전체'
+X_test.loc[X_test['data_source'] == 'age_group', 'region_name'] = '전국'
+
+
 # 전처리를 위한 변수 타입 분류
 numerical_features = [
     'patient_count', 'visit_count', 'medical_care_cost_total', 'insurance_payment', 'rank', 'patient_payment_per_visit',
@@ -16,13 +62,13 @@ numerical_features = [
 ]
 
 categorical_features = [
-    'hospital_type', 'region_name', 'disease_name', 'disease_code', 'age_group'
+    'hospital_type', 'region_name', 'disease_name', 'disease_code', 'age_group', 'data_source'
 ]
 
 # 범주형 변수에 대한 전처리 (원-핫 인코딩)
 categorical_transformer = Pipeline(steps=[
     ('imputer', SimpleImputer(strategy='most_frequent')),  # 결측치는 최빈값으로 대체
-    ('onehot', OneHotEncoder(handle_unknown='ignore',sparse_output=False))  # 원-핫 인코딩 변환
+    ('onehot', OneHotEncoder(handle_unknown='ignore',sparse_output=False))  # 원-핫 인코딩 변환 : 범주형 변수를 수치화 하는 방법
 ])
 
 # 수치형 변수에 대한 전처리 (스케일링)
