@@ -16,7 +16,7 @@ setup(
         "fastapi",
         "uvicorn",
         "pydantic",
-        "scikit-learn==1.0",
+        "scikit-learn==1.6.1",
         "scipy==1.10.1",
         "seaborn==0.13.2",
         "openpyxl==3.1.5",
