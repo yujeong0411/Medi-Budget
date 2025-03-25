@@ -23,6 +23,7 @@ setup(
         "beautifulsoup4==4.13.3",
         "requests==2.32.3",
         "playwright==1.50.0",
-        "pyee==12.1.1"
+        "pyee==12.1.1",
+        "xgboost==2.1.4"
     ]
 )
