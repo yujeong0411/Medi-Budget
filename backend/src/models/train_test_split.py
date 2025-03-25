@@ -6,7 +6,7 @@ engine = get_db_engine()
 
 # ======= 각 테이블을 합쳐서 통합?  vs   원본 데이터 테이블 사용 ======
 
-query = "SELECT * FROM raw_medical_data"
+query = "SELECT * FROM clean_raw_medical_data"
 data = pd.read_sql_query(query, engine)
 
 # 특성(x)과 타켓(y) 분리

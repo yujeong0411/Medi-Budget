@@ -28,10 +28,12 @@ X_test['data_source'] = X_test.apply(determine_data_source, axis=1)
 # 의료기관 종별 데이터 
 X_train.loc[X_train['data_source'] == 'hospital_type', 'region_name'] = '전국'
 X_train.loc[X_train['data_source'] == 'hospital_type', 'age_group'] = '전체'
+X_train.loc[X_train['data_source'] == 'hospital_type', 'rank'] = -1
 
 # 지역별 데이터
 X_train.loc[X_train['data_source'] == 'region', 'hospital_type'] = '전체'
 X_train.loc[X_train['data_source'] == 'region', 'age_group'] = '전체'
+X_train.loc[X_train['data_source'] == 'region', 'rank'] = -1
 
 # 나이별 데이터
 X_train.loc[X_train['data_source'] == 'age_group', 'hospital_type'] = '전체'
@@ -41,16 +43,24 @@ X_train.loc[X_train['data_source'] == 'age_group', 'region_name'] = '전국'
 # 검증 데이터셋
 X_val.loc[X_val['data_source'] == 'hospital_type', 'region_name'] = '전국'
 X_val.loc[X_val['data_source'] == 'hospital_type', 'age_group'] = '전체'
+X_val.loc[X_val['data_source'] == 'hospital_type', 'rank'] = -1
+
 X_val.loc[X_val['data_source'] == 'region', 'hospital_type'] = '전체'
 X_val.loc[X_val['data_source'] == 'region', 'age_group'] = '전체'
+X_val.loc[X_val['data_source'] == 'region', 'rank'] = -1
+
 X_val.loc[X_val['data_source'] == 'age_group', 'hospital_type'] = '전체'
 X_val.loc[X_val['data_source'] == 'age_group', 'region_name'] = '전국'
 
 # 테스트 데이터셋
 X_test.loc[X_test['data_source'] == 'hospital_type', 'region_name'] = '전국'
 X_test.loc[X_test['data_source'] == 'hospital_type', 'age_group'] = '전체'
+X_test.loc[X_test['data_source'] == 'hospital_type', 'rank'] = -1
+
 X_test.loc[X_test['data_source'] == 'region', 'hospital_type'] = '전체'
 X_test.loc[X_test['data_source'] == 'region', 'age_group'] = '전체'
+X_test.loc[X_test['data_source'] == 'region', 'rank'] = -1
+
 X_test.loc[X_test['data_source'] == 'age_group', 'hospital_type'] = '전체'
 X_test.loc[X_test['data_source'] == 'age_group', 'region_name'] = '전국'
 

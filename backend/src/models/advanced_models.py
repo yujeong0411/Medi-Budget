@@ -1,4 +1,3 @@
-# 고급 모델
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,6 +5,8 @@ import seaborn as sns
 from sklearn.linear_model import Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from preprocessing import X_train_processed, X_val_processed
+from train_test_split import y_train, y_val
 import xgboost as xgb
 import joblib
 
